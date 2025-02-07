@@ -3,11 +3,12 @@ import webbrowser
 import subprocess
 import time
 
-os.chdir("C:/Users/aleja/Desktop/tesis/florsync")
+# Obtiene la ruta del directorio donde está el script
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+os.chdir(BASE_DIR)  
 
-
+# Abre la página en el navegador
 webbrowser.open("http://127.0.0.1:8000/login")
 
-
-subprocess.Popen(["start", "python", "manage.py", "runserver"], shell=True)
+subprocess.Popen(["python", "manage.py", "runserver"], shell=True)
 
