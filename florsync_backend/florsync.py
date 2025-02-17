@@ -29,7 +29,6 @@ if getattr(sys, 'frozen', False):
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
 
-print(f"🔍 Ruta base detectada: {BASE_DIR}")
 
 
 if "dist" in BASE_DIR.lower():  # Si el ejecutable está en 'dist', busca hacia arriba
