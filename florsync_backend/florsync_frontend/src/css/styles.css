@@ -1,0 +1,197 @@
+body {
+    background-color: #2A322C;
+    color: white;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    font-family: 'Jockey One', sans-serif;
+    font-family: 'jsMath-cmti10', serif;
+}
+
+.imagenes {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    left: 20px;
+}
+
+.imagenes img {
+    position: absolute;
+    object-fit: cover;
+}
+
+.img1 {
+    top: 0;
+    left: 0;
+    height: 100vh;
+}
+
+.img2 {
+    top: 0;
+    left: 0;
+    margin-left: 520px;
+}
+
+.img3 {
+    top: 0;
+    left: 0;
+    margin-left: 1270px;
+    height:50vh;
+}
+
+.login-section {
+    padding: 20px;
+    width: 300px;
+    z-index: 1;
+    position: absolute;
+    top: 55%;
+    right: 500px;
+    transform: translateY(-50%);
+    font-family: 'Jockey One', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-section h2 {
+    font-size: 28px;
+}
+
+.login-section input {
+    width: auto;
+    padding: 12px;
+    margin-bottom: 60px;
+    font-size: 25px;
+    border-radius: 25px;
+    border: 2px solid #ddd;
+    background-color: #D9D9D9;
+    color: #333;
+    transition: border 0.3s ease, background-color 0.3s ease;
+    text-align: center;
+}
+
+.login-section input:focus {
+    border-color: #4CAF50;
+    background-color: #D9D9D9;
+    outline: none;
+    text-align: center;
+}
+
+.login-section button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #477C4F;
+    border: none;
+    color: black;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-section button:hover {
+    background-color: #477C4F;
+    color: black;
+}
+
+.label-corner {
+    position: absolute;
+    bottom: 105px;
+    right: 250px;
+    font-size: 70px;
+    color: #019C18;
+    padding: 5px 10px;
+    font-family: 'jsMath-cmti10', serif;
+}
+
+/* Ajustes responsivos */
+
+@media (max-width: 1024px) {
+    /* Ajustar las imágenes */
+    .img1 {
+        height: 60vh; /* Ajustamos la altura para pantallas medianas */
+    }
+
+    .img2 {
+        margin-left: 10px; /* Reducimos el margen izquierdo */
+        height: 40vh; /* Ajustamos la altura */
+    }
+
+    .img3 {
+        margin-left: 0; /* Elimina el margen izquierdo */
+        height: 40vh; /* Ajustamos la altura */
+    }
+
+    .login-section {
+        width: 80%; /* Reduzca el tamaño de la sección de login */
+        right: 0; /* Alinea el login a la derecha */
+        top: 50%;
+        transform: translateY(-50%); /* Centrado vertical */
+    }
+}
+
+@media (max-width: 768px) {
+    /* Ajustes aún más pequeños para tablets y teléfonos en modo apaisado */
+    .img1 {
+        height: 50vh; /* Menor altura */
+    }
+
+    .img2 {
+        width: 100%; /* Asegura que .img2 ocupe todo el ancho de la pantalla */
+        height: auto; /* Ajusta la altura proporcionalmente */
+        margin-left: 0;
+    }
+
+    .img3 {
+        width: 100%; /* Asegura que .img3 ocupe todo el ancho de la pantalla */
+        height: auto; /* Ajusta la altura proporcionalmente */
+        margin-left: 0;
+    }
+
+    .login-section {
+        width: 80%; /* Reduce el tamaño del formulario */
+        top: 60%;
+        transform: translateY(-50%); /* Centrado vertical */
+    }
+
+    .login-section h2 {
+        font-size: 24px; /* Reduce el tamaño del título */
+    }
+
+    .login-section input {
+        font-size: 20px; /* Reduce el tamaño de los campos */
+    }
+}
+
+@media (max-width: 480px) {
+    .img1 {
+        height: 40vh; /* Ajustamos la altura de la imagen 1 */
+    }
+
+    .img2 {
+        width: 100%; /* Hace que .img2 ocupe todo el ancho */
+        height: auto; /* La altura será proporcional */
+    }
+
+    .img3 {
+        width: 100%; /* Hace que .img3 ocupe todo el ancho */
+        height: auto; /* La altura será proporcional */
+    }
+
+    .login-section {
+        width: 90%; /* Aumentamos el ancho para pantallas pequeñas */
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%); /* Centrado vertical */
+    }
+
+    .login-section input {
+        font-size: 18px; /* Reduce el tamaño de los campos de texto */
+    }
+
+    .login-section h2 {
+        font-size: 22px; /* Reduce el tamaño del título */
+    }
+}

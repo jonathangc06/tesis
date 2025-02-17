@@ -1,9 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
-def login(request):
-    	return render(request, 'login.html')
-
-
-def hola (request):
-	return HttpResponse("hola")
+def home(request):
+    return render(request, 'index.html')

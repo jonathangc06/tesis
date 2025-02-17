@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,7 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api',
+    'rest_framework',  # Asegúrate de que solo esté una vez
+    'corsheaders',  # Debe ser 'corsheaders', no 'corsheadersrest_framework'
+
+    # Otras apps personalizadas...
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,7 +61,8 @@ ROOT_URLCONF = 'florsync.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],  # Agrega esta línea si tienes una carpeta 'templates' en la raíz del proyecto
+        'DIRS': [
+os.path.join(BASE_DIR, 'florsync_frontend', 'dist'),            ],  
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -111,6 +119,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+MIDDLEWARE += ['corsheaders.middleware.CorsMiddleware']
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Dirección del frontend de React
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -119,12 +132,22 @@ STATIC_URL = 'static/'
 
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Asegúrate de que "BASE_DIR" esté definido correctamente
+    BASE_DIR / "static",  # El directorio donde Vite construye los archivos
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:5174",
+    "http://localhost:5173",
+    "https://mi-dominio.com",
+]
+
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
