@@ -3,7 +3,7 @@ import { obtenerMensaje } from '../api/test.api';
 import '../css/styles.css';
 
 
-const TestList = () => {
+const Login = () => {
     
     const [mensaje, setMensaje] = useState(""); 
 
@@ -49,4 +49,4 @@ const TestList = () => {
       );
 }
 
-export default TestList;
+export default Login;
