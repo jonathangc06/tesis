@@ -1,6 +1,10 @@
-from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .models import Usuarios
+from .serializers import UsuariosSerializer
 
-class SaludoViewSet(viewsets.ViewSet):
-    def list(self, request):
-        return Response({"message": "Hola desde Django con ViewSet!"})
+@api_view(['GET'])
+def obtener_usuarios(request):
+    usuarios = Usuarios.objects.all()
+    serializer = UsuariosSerializer(usuarios, many=True)
+    return Response(serializer.data)

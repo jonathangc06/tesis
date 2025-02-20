@@ -1,5 +1,5 @@
-import axios from "axios"; 
+import axios from 'axios';
 
-export const obtenerMensaje = () => {
-    return axios.get('http://localhost:8000/api/login/api/') 
-}
+export const obtenerUsuarios = async () => {
+    return await axios.get("http://localhost:8000/api/usuarios/");
+};

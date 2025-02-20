@@ -1,10 +1,6 @@
-from django.urls import path, include
-from rest_framework import routers
-from api import views     # Asegúrate de que sea un ViewSet
-
-router = routers.DefaultRouter()
-router.register(r'api', views.SaludoViewSet ,'saludo')
+from django.urls import path
+from .views import obtener_usuarios
 
 urlpatterns = [
-    path('login/', include(router.urls)),  # Aquí usamos router.urls
+    path('usuarios/', obtener_usuarios, name='obtener_usuarios'),
 ]
