@@ -1,7 +1,8 @@
 import './App.css'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"; // Corregido
-import Login from './pages/login';
+import Login from './pages/Login.jsx';
 import Navigation from './components/Navigation';
+
 
 function App() {
   return (

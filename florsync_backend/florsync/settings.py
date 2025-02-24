@@ -85,13 +85,15 @@ WSGI_APPLICATION = 'florsync.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'FlorsyncBD',
-        'USER': 'postgres',
-        'PASSWORD': 'florsync123',
-        'HOST': 'localhost',  # O la IP del servidor
-        'PORT': '5432',  # Puerto por defecto de PostgreSQL
+        'NAME': 'FlorsyncBD',  # El nombre de tu base de datos
+        'USER': 'postgres',     # El usuario de la base de datos
+        'PASSWORD': 'florsync123',  # La contraseña del usuario
+        'HOST': 'db',  # El nombre del servicio de la base de datos en docker-compose
+        'PORT': '5432',  # Puerto estándar de PostgreSQL
     }
 }
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

@@ -77,8 +77,9 @@ pyinstaller==6.11.1
 pyinstaller-hooks-contrib==2024.11
 python-dateutil==2.9.0.post0
 python-json-logger==3.2.1
-pywin32==308; sys_platform == 'win32'
+pywin32==308
 pywin32-ctypes==0.2.3
+pywinpty==2.0.15
 PyYAML==6.0.2
 pyzmq==26.2.1
 referencing==0.36.2
@@ -106,6 +107,5 @@ wcwidth==0.2.13
 webcolors==24.11.1
 webencodings==0.5.1
 websocket-client==1.8.0
+wheel==0.45.1
 widgetsnbextension==4.0.13
-
-
