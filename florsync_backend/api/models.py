@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.hashers import make_password, check_password
 
 
 class Clientes(models.Model):
@@ -12,12 +13,17 @@ class Clientes(models.Model):
         return self.nombre_cliente
 
 class Usuarios(models.Model):
-    id_usuario = models.AutoField(primary_key=True)
+    id_usuario = models.IntegerField(primary_key=True)
     contrasena = models.CharField(max_length=255)
 
-    def __str__(self):
-        return f"Usuario {self.id_usuario}"
+    def save(self, *args, **kwargs):
+        # Encripta la contraseña antes de guardar
+        self.contrasena = make_password(self.contrasena)
+        super().save(*args, **kwargs)
 
+    def verificar_contraseña(self, password):
+        return check_password(password, self.contrasena)  # Verifica la contraseña encriptada
+    
 class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
     fecha = models.DateTimeField(auto_now_add=True)
