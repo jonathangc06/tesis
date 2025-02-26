@@ -5,7 +5,7 @@ import "../css/styles.css";
 const Login = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [formData, setFormData] = useState({
-    username: "",
+    id_usuario: "",
     password: "",
   });
 
@@ -30,23 +30,31 @@ const Login = () => {
   };
 
   const handleSubmit = async (event) => {
-    console.log("🟢 Botón presionado, función ejecutándose...");
-    alert("🔔 Procesando inicio de sesión...");
+    event.preventDefault();  
+
+  
 
     try {
-        const res = await validarUsuario(formData);
-        console.log("🔵 Respuesta del servidor:", res.data);
+        const { id_usuario, password } = formData;  
+        if (!id_usuario || !password) {
+            alert(" Completa todos los campos");
+            return;
+        }
 
-        if (res.data.autenticado) {
+        const res = await validarUsuario(id_usuario, password);  
+        console.log("🔵 Respuesta del servidor:", res);
+
+        if (res.autenticado) { 
             alert("✅ Inicio de sesión exitoso");
         } else {
-            alert("❌ Usuario o contraseña incorrectos");
+            alert(" Usuario o contraseña incorrectos");
         }
     } catch (error) {
-        console.error("❌ Error en el inicio de sesión:", error);
-        alert("⚠️ Hubo un error al intentar iniciar sesión");
+        console.error(" Error en el inicio de sesión:", error.response?.data || error.message);
+        alert(" Hubo un error al intentar iniciar sesión");
     }
 };
+
   return (
     <div>
       <div className="imagenes">
@@ -58,7 +66,7 @@ const Login = () => {
       <div className="login-section">
         <h2>Iniciar sesión</h2>
         <form>
-          <input type="text" name="username" placeholder="Digite su usuario" onChange={handleChange} required />
+          <input type="text" name="id_usuario" placeholder="Digite su usuario" onChange={handleChange} required />
           <input type="password" name="password" placeholder="Digite su contraseña" onChange={handleChange} required />
           <button type="button" onClick={handleSubmit}>INICIAR SESIÓN</button>
         </form>
