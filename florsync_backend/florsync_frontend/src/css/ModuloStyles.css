@@ -1,0 +1,64 @@
+.modulo-body {
+    background-color: white; 
+    color: black; 
+    font-family: Arial, sans-serif;
+    margin: 0; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modulo-header {
+    background-color: #2A322C;
+    color: #019C18;  
+    text-align: center;  
+    padding: 10px;  
+    font-size: 18px;  
+    font-style: italic;  
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    z-index: 1000; 
+}
+
+.modulo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    padding-top: 200px;
+    width: 100%;
+}
+
+.modulo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2A322C;
+    color: white;
+    padding: 25px 80px; /* Aumenta el padding horizontalmente */
+    border-radius: 15px;
+    width: 1500px; /* Se ajusta al 60% del ancho de la pantalla */
+    height: 120px;
+    font-size: 45px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.modulo-item span {
+    flex-grow: 1;
+    text-align: left; /* Centra el texto */
+}
+
+.modulo-item img {
+    width: 90px;
+    height: 90px;
+    margin-left: 40px; /* Espacio entre el texto y la imagen */
+}
+
+.modulo-item:hover {
+    background-color: #444;
+}

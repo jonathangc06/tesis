@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { obtenerUsuarios, validarUsuario } from "../api/test.api"; // Asegúrate de tener esta función en la API
+import { obtenerUsuarios, validarUsuario } from "../api/test.api";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../components/AuthContext"; // Importar contexto de autenticación
 import "../css/styles.css";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth(); // Obtener la función login del contexto
   const [usuarios, setUsuarios] = useState([]);
   const [formData, setFormData] = useState({
     id_usuario: "",
@@ -14,7 +18,7 @@ const Login = () => {
       try {
         const res = await obtenerUsuarios();
         console.log("Usuarios obtenidos:", res.data);
-        setUsuarios(res.data); // Guardar los usuarios en el estado
+        setUsuarios(res.data);
       } catch (error) {
         console.error("Error al obtener los usuarios:", error);
       }
@@ -30,31 +34,30 @@ const Login = () => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();  
-
-  
-
+    event.preventDefault();
     try {
-        const { id_usuario, password } = formData;  
-        if (!id_usuario || !password) {
-            alert(" Completa todos los campos");
-            return;
-        }
-
-        const res = await validarUsuario(id_usuario, password);  
-        console.log("🔵 Respuesta del servidor:", res);
-
-        if (res.autenticado) { 
-            alert("✅ Inicio de sesión exitoso");
-        } else {
-            alert(" Usuario o contraseña incorrectos");
-        }
+      const { id_usuario, password } = formData;
+      if (!id_usuario || !password) {
+        alert("Completa todos los campos");
+        return;
+      }
+  
+      const res = await validarUsuario(id_usuario, password);
+      console.log("🔵 Respuesta del servidor:", res); // DEBUG
+  
+      if (res.autenticado) {
+        
+        login(); 
+        setTimeout(() => navigate("/menu"), 500); 
+      } else {
+        alert("Usuario o contraseña incorrectos");
+      }
     } catch (error) {
-        console.error(" Error en el inicio de sesión:", error.response?.data || error.message);
-        alert(" Hubo un error al intentar iniciar sesión");
-    }
-};
+      console.error("Error en el inicio de sesión:", error.response?.data || error.message);
+      alert("Usuario o contraseña incorrectos");
 
+    }
+  };
   return (
     <div>
       <div className="imagenes">
@@ -65,10 +68,10 @@ const Login = () => {
 
       <div className="login-section">
         <h2>Iniciar sesión</h2>
-        <form>
-          <input type="text" name="id_usuario" placeholder="Digite su usuario" onChange={handleChange} required />
-          <input type="password" name="password" placeholder="Digite su contraseña" onChange={handleChange} required />
-          <button type="button" onClick={handleSubmit}>INICIAR SESIÓN</button>
+        <form onSubmit={handleSubmit}>
+        <input type="number" name="id_usuario" placeholder="Número de usuario" onChange={handleChange} min="1" required />
+        <input type="password" name="password" placeholder="Digite su contraseña" onChange={handleChange} required />
+          <button type="submit">INICIAR SESIÓN</button>
         </form>
       </div>
 
