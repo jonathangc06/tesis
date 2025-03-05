@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../css/Registrar.css";
+import { registrarClientes } from "../api/test.api";
+
 
 const Registrar = () => {
   const modulos = {
@@ -17,8 +19,8 @@ const Registrar = () => {
     clientes: {
       titulo: "Nuevo Cliente",
       datos: [
-        { campo: "id", etiqueta: "Cédula" },
-        { campo: "nombre", etiqueta: "Nombre del cliente" },
+        { campo: "cedula", etiqueta: "Cédula" },
+        { campo: "nombre_cliente", etiqueta: "Nombre del cliente" },
         { campo: "direccion", etiqueta: "Dirección" },
         { campo: "correo", etiqueta: "Correo electrónico" },
         { campo: "telefono", etiqueta: "Teléfono" },
@@ -57,7 +59,8 @@ const Registrar = () => {
         if (moduloSeleccionado === "inventario") {
             alert("Producto registrado con éxito");
         } else {
-            alert("Funcionalidad de clientes aún no implementada.");
+            await registrarClientes(formData); 
+            alert("Cliente registrado con exito.");
         }
     } catch (error) {
         console.error("Error al registrar:", error); // 📌 Depuración de errores

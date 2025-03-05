@@ -28,7 +28,7 @@ const Modulo = () => {
       opciones: [
         { tipo: "registrar", nombre: "Registrar cliente", imagen: "/images/añadir_cliente.png" },
         { tipo: "modificar", nombre: "Modificar clientes existentes", imagen: "/images/editar_cliente.png" },
-        { tipo: "visualizar", nombre: "Visualizar cliente", imagen: "/images/ver_cliente.png" },
+        { tipo: "visualizar-cliente", nombre: "Visualizar cliente", imagen: "/images/ver_cliente.png" },
         { tipo: "eliminar", nombre: "Eliminar cliente", imagen: "/images/eliminar_cliente.png" },
       ],
     },

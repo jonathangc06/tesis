@@ -26,7 +26,7 @@ function App() {
           <Route path="/menu" element={<ProtectedRoute><Menu /></ProtectedRoute>} />
           <Route path="/modulo/:nombre" element={<ProtectedRoute><Modulo /></ProtectedRoute>} />
           <Route path="/registrar/:tipo" element={<ProtectedRoute><Registrar /></ProtectedRoute>} />
-
+           {/* <Route path="/visualizar-cliente/:tipo" element={<ProtectedRoute><Visualizar_cliente /></ProtectedRoute>} /> */}
 
           {/* Redirección si la ruta no existe */}
           <Route path="*" element={<Navigate to="/login" replace />} />

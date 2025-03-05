@@ -19,3 +19,20 @@ export const validarUsuario = async (id_usuario, password) => {
         return response.data;
     
 };
+
+export const registrarClientes = async (clienteData) => {
+    try {
+        const response = await axios.post(
+            'http://localhost:8000/api/registrar-cliente/', 
+            clienteData,
+            { headers: { 'Content-Type': 'application/json' } }
+        );
+        
+
+        console.log("Cliente registrado exitosamente:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error al registrar cliente:", error.response?.data || error.message);
+        throw error;
+    }
+};
