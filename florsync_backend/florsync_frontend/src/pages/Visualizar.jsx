@@ -1,80 +1,87 @@
 import React, { useEffect, useState } from "react";
 import { obtenerProductos } from "../api/test.api";
+import "../css/Visualizar.css"; // Importamos los estilos
 
 const Visualizar = () => {
     const [productos, setProductos] = useState([]);
     const [filtroNombre, setFiltroNombre] = useState("");
     const [filtroTipo, setFiltroTipo] = useState("");
-    const [tipos, setTipos] = useState([]); 
+    const [tipos, setTipos] = useState([]);
 
     useEffect(() => {
         obtenerProductos()
             .then(data => {
                 setProductos(data);
-
-                // Extraer tipos únicos de los productos
                 const tiposUnicos = [...new Set(data.map(producto => producto.tipo))];
                 setTipos(tiposUnicos);
             })
             .catch(error => console.error("Error al obtener productos:", error));
     }, []);
 
-    // Filtrado de productos
     const productosFiltrados = productos.filter(producto =>
         (producto.nombre.toLowerCase().includes(filtroNombre.toLowerCase()) || 
          producto.id_producto.toString().includes(filtroNombre)) &&
         (filtroTipo === "" || producto.tipo === filtroTipo)
     );
 
-    return (
-        <div>
-            <h2>Lista de Productos</h2>
+    useEffect(() => {
+        document.body.classList.add("inventario-body");
+        return () => {
+          document.body.classList.remove("inventario-body");
+        };
+      }, []);
 
-            {/* Filtros */}
-            <div>
+      return (
+        <div>
+            {/* Encabezado con barra de búsqueda y filtros */}
+            <div className="encabezado-inventario">
+                <h1>Inventario <span>Actual</span></h1>
+    
+                {/* Barra de búsqueda */}
                 <input
                     type="text"
-                    placeholder="Buscar por nombre o referencia (ID)"
+                    className="buscador"
+                    placeholder="Buscar producto"
                     value={filtroNombre}
                     onChange={(e) => setFiltroNombre(e.target.value)}
                 />
-                <select onChange={(e) => setFiltroTipo(e.target.value)} value={filtroTipo}>
-                    <option value="">Todos los tipos</option>
+    
+                {/* Filtros */}
+                <div className="filtros-tipos">
                     {tipos.map((tipo, index) => (
-                        <option key={index} value={tipo}>{tipo}</option>
+                        <label key={index} className="filtro-checkbox">
+                            <input
+                                type="checkbox"
+                                value={tipo}
+                                checked={filtroTipo === tipo}
+                                onChange={(e) => setFiltroTipo(e.target.checked ? tipo : "")}
+                            />
+                            {tipo}
+                        </label>
                     ))}
-                </select>
+                </div>
             </div>
-
-            {/* Tabla con productos filtrados */}
-            {productosFiltrados.length === 0 ? (
-                <p>No hay productos que coincidan con los filtros.</p>
-            ) : (
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Precio</th>
-                            <th>Tipo</th>
-                            <th>Cantidad</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+    
+            {/* Contenedor del inventario */}
+            <div className="inventario-container">
+                {productosFiltrados.length === 0 ? (
+                    <p className="mensaje-no-productos">No hay productos disponibles.</p>
+                ) : (
+                    <div className="productos-container">
                         {productosFiltrados.map(producto => (
-                            <tr key={producto.id_producto}>
-                                <td>{producto.id_producto}</td>
-                                <td>{producto.nombre}</td>
-                                <td>${producto.precio}</td>
-                                <td>{producto.tipo}</td>
-                                <td>{producto.cantidad}</td>
-                            </tr>
+                            <div key={producto.id_producto} className="producto-card">
+                                <p><strong>Referencia:</strong> {producto.id_producto}</p>
+                                <p><strong>Nombre del producto:</strong> {producto.nombre}</p>
+                                <p><strong>Cantidad actual:</strong> {producto.cantidad}</p>
+                                <p><strong>Precio:</strong> ${parseFloat(producto.precio).toFixed(0)}</p>
+                                <p><strong>Tipo:</strong> {producto.tipo}</p>
+                            </div>
                         ))}
-                    </tbody>
-                </table>
-            )}
+                    </div>
+                )}
+            </div>
         </div>
     );
-};
-
+    
+}
 export default Visualizar;

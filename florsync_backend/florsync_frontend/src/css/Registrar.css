@@ -18,11 +18,7 @@
     font-size: 32px;
     font-style: italic;
     font-weight: bold;
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
-    z-index: 1000;
 }
 
 .formulario-container {
