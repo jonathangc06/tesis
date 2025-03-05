@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../css/Registrar.css";
-import { registrarClientes } from "../api/test.api";
+import { registrarClientes, registrarProducto } from "../api/test.api";
 
 
 const Registrar = () => {
@@ -57,6 +57,7 @@ const Registrar = () => {
 
     try {
         if (moduloSeleccionado === "inventario") {
+            await registrarProducto(formData);
             alert("Producto registrado con éxito");
         } else {
             await registrarClientes(formData); 

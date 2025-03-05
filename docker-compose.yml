@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://floruser:florsync123@db:5432/FlorsyncBD  # Verifica que floruser exista en la DB
+      DATABASE_URL: postgres://floruser:florsync123@db:5432/FlorsyncBD  
     ports:
       - "8000:8000"
     volumes:
@@ -27,7 +27,7 @@ services:
              python manage.py runserver 0.0.0.0:8000"
 
   frontend:
-    build: ./florsync_backend/florsync_frontend  # Se corrigió la indentación
+    build: ./florsync_backend/florsync_frontend  
     restart: always
     depends_on:
       - backend

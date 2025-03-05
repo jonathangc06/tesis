@@ -1,7 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Usuarios
-from .models import Clientes
+from .models import Clientes, Producto
+from .serializers import ProductoSerializer
 from .serializers import UsuariosSerializer
 from django.contrib.auth.hashers import check_password
 from rest_framework import status
@@ -36,12 +37,14 @@ def login_usuario(request):
 @api_view(['POST'])
 def registrar_cliente(request):
     print("Datos recibidos en Django:", request.data)  
-
+    
     cedula = request.data.get("cedula", "").strip()
     direccion = request.data.get("direccion", "").strip()
     correo = request.data.get("correo", "").strip()
     nombre_cliente = request.data.get("nombre_cliente", "").strip()
     telefono = request.data.get("telefono", "").strip()
+    if Clientes.objects.filter(cedula=cedula).exists():
+            return Response({"error": "Esta cedula ya esta  registrada"}, status=status.HTTP_400_BAD_REQUEST)
 
     clientes = Clientes(
         cedula=cedula, 
@@ -57,3 +60,60 @@ def registrar_cliente(request):
     except Exception as e:
         print("Error al guardar en la base de datos:", str(e)) 
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Producto
+
+@api_view(['POST'])
+def registrar_producto(request):
+    id_producto = request.data.get("id_producto")
+    nombre = request.data.get("nombre")
+    precio = request.data.get("precio")
+    tipo = request.data.get("tipo")
+    cantidad = request.data.get("cantidad")
+
+    # Verificar que todos los datos están presentes
+    if not all([id_producto, nombre, precio, tipo, cantidad]):
+        return Response({"error": "Todos los campos son obligatorios"}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Validar si ya existe un producto con ese ID
+    if Producto.objects.filter(id_producto=id_producto).exists():
+        return Response({"error": "El producto con este ID ya existe."}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Crear el producto solo si el ID no existe
+    producto = Producto(
+        id_producto=id_producto,
+        nombre=nombre,
+        precio=precio,
+        tipo=tipo,
+        cantidad=cantidad
+    )
+
+    try:
+        producto.save()
+        return Response({"mensaje": "Producto registrado con éxito"}, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def obtener_productos(request):
+    nombre = request.GET.get('nombre', None)
+    referencia = request.GET.get('id_producto', None)
+    tipos = request.GET.getlist('tipo')  # Permite filtrar por varios tipos
+
+    productos = Producto.objects.all()
+
+    if nombre:
+        productos = productos.filter(nombre__icontains=nombre)  # Búsqueda flexible
+
+    if referencia:
+        productos = productos.filter(id_producto=referencia)
+
+    if tipos:
+        productos = productos.filter(tipo__in=tipos)  # Filtra por lista de tipos
+
+    serializer = ProductoSerializer(productos, many=True)
+    return Response(serializer.data)

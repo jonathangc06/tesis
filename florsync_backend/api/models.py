@@ -34,10 +34,10 @@ class Venta(models.Model):
         return f"Venta {self.id_venta}"
 
 class Producto(models.Model):
-    id = models.AutoField(primary_key=True)
+    id_producto = models.IntegerField(primary_key=True)
+    nombre = models.CharField(max_length=100)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     tipo = models.CharField(max_length=50)
-    nombre = models.CharField(max_length=100)
     cantidad = models.IntegerField()
 
     def __str__(self):
