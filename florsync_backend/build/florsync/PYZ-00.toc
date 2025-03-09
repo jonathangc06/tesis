@@ -1,4 +1,4 @@
-('C:\\Users\\aleja\\Desktop\\tesis\\florsync\\build\\florsync\\PYZ-00.pyz',
+('C:\\Users\\aleja\\Desktop\\aqui\\tesis\\florsync_backend\\build\\florsync\\PYZ-00.pyz',
  [('__future__',
    'C:\\Users\\aleja\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\__future__.py',
    'PYMODULE'),
