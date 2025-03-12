@@ -137,8 +137,7 @@ CORS_ALLOWED_ORIGINS = [
 STATIC_URL = 'static/'
 
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # El directorio donde Vite construye los archivos
+STATICFILES_DIRS = [ # El directorio donde Vite construye los archivos
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
