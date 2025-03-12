@@ -37,6 +37,20 @@ export const registrarClientes = async (clienteData) => {
     }
 };
 
+export const obtenerClientePorTipo = async (tipo) => {
+    try {
+        const response = await axios.get("http://localhost:8000/api/visualizar-cliente/", {
+            params: { cedula: tipo } // 👈 Pasa el parámetro correctamente
+        });
+        console.log("✅ Cliente encontrado:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("❌ Error al obtener cliente:", error.response?.data || error.message);
+        throw error;
+    }
+};
+
+
 export const registrarProducto = async (productoData) => {
     try {
         const response = await axios.post(
@@ -69,3 +83,4 @@ export const obtenerProductos = async (nombre = "", id_producto = "", tipos = []
         throw error;
     }
 };
+

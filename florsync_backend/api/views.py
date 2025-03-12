@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Usuarios
 from .models import Clientes, Producto
-from .serializers import ProductoSerializer
+from .serializers import ClienteSerializer, ProductoSerializer
 from .serializers import UsuariosSerializer
 from django.contrib.auth.hashers import check_password
 from rest_framework import status
@@ -116,4 +116,24 @@ def obtener_productos(request):
         productos = productos.filter(tipo__in=tipos)  # Filtra por lista de tipos
 
     serializer = ProductoSerializer(productos, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def visualizar_cliente(request):
+    cedula = request.GET.get('cedula', None)
+    nombre_cliente = request.GET.get('nombre_cliente', None)
+    telefono = request.GET.get('telefono', None)
+
+    clientes = Clientes.objects.all()
+
+    if cedula:
+        clientes = clientes.filter(cedula__icontains=cedula)  # Filtrar por cédula
+
+    if nombre_cliente:
+        clientes = clientes.filter(nombre__icontains=nombre_cliente)  # Filtrar por nombre
+
+    if telefono:
+        clientes = clientes.filter(telefono__icontains=telefono)  # Filtrar por teléfono
+
+    serializer = ClienteSerializer(clientes, many=True)
     return Response(serializer.data)

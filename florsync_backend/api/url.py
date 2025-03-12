@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import obtener_usuarios, login_usuario, registrar_producto, obtener_productos
+from .views import obtener_usuarios, login_usuario, registrar_producto, obtener_productos, visualizar_cliente
 from .views import registrar_cliente
 
 urlpatterns = [
@@ -8,5 +8,6 @@ urlpatterns = [
     path('registrar-cliente/',registrar_cliente, name='registrar_cliente'),
     path('registrar-producto/', registrar_producto, name='registrar_producto'), 
     path('obtener-productos/', obtener_productos, name='obtener_productos'),
+    path('visualizar-cliente/', visualizar_cliente, name='visualizar_cliente'),
        
 ]

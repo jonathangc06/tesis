@@ -1,16 +1,18 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
 
-
 class Clientes(models.Model):
     cedula = models.CharField(max_length=20, primary_key=True)
     direccion = models.TextField(blank=True, null=True)
     correo = models.EmailField(max_length=100, blank=True, null=True)
     nombre_cliente = models.CharField(max_length=100)
     telefono = models.CharField(max_length=20, blank=True, null=True)
+    compras = models.IntegerField(default=0)  # Nuevo campo: cantidad de compras, inicia en 0
+    fecha_registro = models.DateField(auto_now_add=True)  # Nuevo campo: fecha automática al registrar
 
     def __str__(self):
         return self.nombre_cliente
+
 
 class Usuarios(models.Model):
     id_usuario = models.IntegerField(primary_key=True)

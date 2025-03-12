@@ -77,6 +77,9 @@ const Modulo = () => {
       case "informe":
         navigate(`/informe/${nombreFormateado}`);
         break;
+      case "visualizar-cliente": 
+         navigate(`/visualizar-cliente/${nombreFormateado}`);
+        break;
       default:
         console.warn("Opción no reconocida:", tipoOpcion);
     }
