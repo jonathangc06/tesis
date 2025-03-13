@@ -51,9 +51,9 @@ const Registrar = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // 📌 Evita que la página se recargue
+    e.preventDefault(); 
 
-    console.log("Formulario enviado con:", formData); // 📌 Depuración
+    console.log("Formulario enviado con:", formData); 
 
     try {
         if (moduloSeleccionado === "inventario") {
@@ -64,7 +64,7 @@ const Registrar = () => {
             alert("Cliente registrado con exito.");
         }
     } catch (error) {
-        console.error("Error al registrar:", error); // 📌 Depuración de errores
+        console.error("Error al registrar:", error); 
         alert("Error al registrar el producto");
     }
 };

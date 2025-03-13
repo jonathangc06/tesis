@@ -1,0 +1,110 @@
+.modificar-body {
+    background-color: white;
+    color: black;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+}
+
+.modificar-header {
+    background-color: #2A322C;
+    color: #019C18;
+    text-align: center;
+    padding: 20px;
+    font-size: 32px;
+    font-style: italic;
+    font-weight: bold;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.buscador {
+    width: 60%;
+    padding: 8px;
+    margin: 10px 0;
+    background-color: #ddd;
+    border: none;
+    text-align: center;
+    font-size: 16px;
+}
+
+.btn-buscar {
+    background-color: black;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modificar-container {
+    background-color:  white;
+    border-radius: 8px;
+    padding: 40px;
+    width: 100%;/* Aumenta el ancho */
+    height: 100vh; /* Aumenta la altura para que ocupe casi toda la pantalla */
+    margin: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el contenido verticalmente */
+    align-items: center; /* Centra el contenido horizontalmente */
+}
+.fila {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Asegura que los elementos se alineen a la izquierda */
+    width: 100%;
+    margin: 15px 0;
+}
+
+.fila input[type="checkbox"] {
+    transform: scale(1.2); /* Aumenta el tamaño para mejor visibilidad */
+}
+
+.fila label {
+    flex: none; /* Evita que el label se expanda */
+    text-align: left;
+    font-weight: bold;
+}
+.fila input {
+    flex: 2;
+    padding: 8px;
+    text-align: center;
+}
+
+.input-deshabilitado {
+    background-color: #ddd;
+    border: none;
+    padding: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.input-editable {
+    padding: 8px;
+    border: 1px solid black;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.btn-modificar {
+    background-color: black;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    margin-top: 10px;
+}

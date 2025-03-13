@@ -40,12 +40,12 @@ export const registrarClientes = async (clienteData) => {
 export const obtenerClientePorTipo = async (tipo) => {
     try {
         const response = await axios.get("http://localhost:8000/api/visualizar-cliente/", {
-            params: { cedula: tipo } // 👈 Pasa el parámetro correctamente
+            params: { cedula: tipo } 
         });
-        console.log("✅ Cliente encontrado:", response.data);
+        console.log(" Cliente encontrado:", response.data);
         return response.data;
     } catch (error) {
-        console.error("❌ Error al obtener cliente:", error.response?.data || error.message);
+        console.error(" Error al obtener cliente:", error.response?.data || error.message);
         throw error;
     }
 };
@@ -84,3 +84,29 @@ export const obtenerProductos = async (nombre = "", id_producto = "", tipos = []
     }
 };
 
+export const modificarProducto = async (id, datos) => {
+    try {
+        const response = await axios.put(
+            `http://localhost:8000/api/modificar-productos/${id}/`,
+            datos,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        return { success: true, data: response.data };
+    } catch (error) {
+        console.error("Error al modificar el producto:", error.response?.data || error.message);
+        return { success: false, error: error.response?.data || "Error desconocido" };
+    }
+};
+
+export const obtenerProductoPorID = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/obtener-productosID/${id}`);
+        return response.data;
+    } catch (error) {
+        throw new Error("Producto no encontrado o error en la API");
+    }
+};

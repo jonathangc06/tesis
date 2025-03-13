@@ -6,6 +6,7 @@ import Modulo from "./pages/Modulo";
 import Registrar from "./pages/Registrar"; 
 import Visualizar from "./pages/Visualizar"; 
 import VisualizarCliente from "./pages/visualizarCliente";
+import Modificar from "./pages/Modificar";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -31,8 +32,9 @@ function App() {
           <Route path="/registrar/:tipo" element={<ProtectedRoute><Registrar /></ProtectedRoute>} />
           <Route path="/visualizar/:tipo" element={<ProtectedRoute><Visualizar /></ProtectedRoute>} />
           <Route path="/Visualizar-cliente/:tipo" element={<ProtectedRoute><VisualizarCliente /></ProtectedRoute>} />
+          <Route path="/modificar/:tipo" element={<ProtectedRoute><Modificar /></ProtectedRoute>} />
 
-          {/* Redirección si la ruta no existe */}
+  
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Router>

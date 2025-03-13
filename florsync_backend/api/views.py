@@ -137,3 +137,30 @@ def visualizar_cliente(request):
 
     serializer = ClienteSerializer(clientes, many=True)
     return Response(serializer.data)
+@api_view(['GET'])
+def obtener_productoId(request, id):
+    try:
+        producto = Producto.objects.get(id_producto=id)
+        serializer = ProductoSerializer(producto)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Producto.DoesNotExist:
+        return Response({"error": "Producto no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['Put'])
+def modificar_producto(request, id):
+    try:
+        producto = Producto.objects.get(id_producto=id)
+    except Producto.DoesNotExist:
+        return Response({"error": "Producto no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+    print("Datos recibidos:", request.data)  # 👀 Ver los datos en la terminal
+
+    try:
+        serializer = ProductoSerializer(producto, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Datos inválidos", "detalles": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({"error": "Error interno del servidor", "detalles": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
