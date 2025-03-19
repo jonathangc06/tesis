@@ -23,11 +23,11 @@
   margin-bottom: 20px;
   font-family: "Times New Roman", Times, serif;
   font-size: 32px;
-  font-weight: 400; /* Hace la letra más delgada */
+  font-weight: 400; 
   border-radius: 0px;
 }
 
-/* --- BUSCADOR --- */
+
 .search-container {
   width: 80%;
   max-width: 500px;
@@ -47,14 +47,14 @@
   outline: none;
 }
 
-/* --- CONTENEDOR DE CLIENTES --- */
+
 .clientes-container {
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-/* --- TABLA CLIENTES --- */
+
 .table {
   width: 90vw; 
   max-width: 1500px;

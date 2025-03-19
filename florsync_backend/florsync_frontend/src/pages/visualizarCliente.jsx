@@ -67,12 +67,12 @@ return (
         placeholder="Buscar por cédula"
         value={cedulaBuscar}
         onChange={(e) => setCedulaBuscar(e.target.value)}
-        onKeyPress={(e) => e.key === "Enter" && buscarCliente()} // Buscar con Enter
+        onKeyPress={(e) => e.key === "Enter" && buscarCliente()} 
       />
-      <button onClick={buscarCliente}>Buscar</button> {/* Botón de búsqueda */}
+      <button onClick={buscarCliente}>Buscar</button> 
     </div>
 
-    {/* Contenedor de clientes */}
+    
     <div className="clientes-container">
       <table className="table">
         <tbody>

@@ -110,3 +110,29 @@ export const obtenerProductoPorID = async (id) => {
         throw new Error("Producto no encontrado o error en la API");
     }
 };
+export const obtenerClientesPorID = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/obtener-clientesID/${id}`);
+        return response.data;
+    } catch (error) {
+        throw new Error("Producto no encontrado o error en la API");
+    }
+};
+
+export const modificarCliente = async (id, datos) => {
+    try {
+        const response = await axios.put(
+            `http://localhost:8000/api/modificar-clientes/${id}/`,
+            datos,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        return { success: true, data: response.data };
+    } catch (error) {
+        console.error("Error al modificar el producto:", error.response?.data || error.message);
+        return { success: false, error: error.response?.data || "Error desconocido" };
+    }
+};

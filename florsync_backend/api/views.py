@@ -164,3 +164,27 @@ def modificar_producto(request, id):
             return Response({"error": "Datos inválidos", "detalles": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         return Response({"error": "Error interno del servidor", "detalles": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+
+
+@api_view(['GET'])
+def obtener_clientesId(request, id):
+    try:
+        clientes = Clientes.objects.get(cedula=id)
+        serializer = ClienteSerializer(clientes)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Clientes.DoesNotExist:
+        return Response({"error": "Producto no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['Put'])
+def modificar_clientes(request, id):
+    try:
+        cliente = Clientes.objects.get(cedula=id)
+    except Clientes.DoesNotExist:
+        return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = ClienteSerializer(cliente, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({"error": "Datos inválidos", "detalles": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)

@@ -7,7 +7,8 @@
     flex-direction: column;
     align-items: center;
     height: 100vh;
-    justify-content: center;
+    justify-content: flex-start; 
+    padding-top: 80px; 
 }
 
 .modificar-header {
@@ -26,54 +27,68 @@
 }
 
 .buscador {
-    width: 60%;
-    padding: 8px;
-    margin: 10px 0;
-    background-color: #ddd;
-    border: none;
-    text-align: center;
-    font-size: 16px;
+    width: 80%;
+    max-width: 500px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    border: 2px solid black;
 }
 
 .btn-buscar {
-    background-color: black;
-    color: white;
-    padding: 8px 15px;
-    border: none;
+    width: 100%;
+    padding: 15px;
+    font-size: 18px; /* Hacer el texto más grande */
+    border-radius: 25px; /* Bordes redondeados */
+    text-align: center;
+    background-color: #ddd;
+    outline: none;
     cursor: pointer;
-    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-buscar:hover {
+    background-color: #bbb;
+    transform: scale(1.05);
 }
 
 .modificar-container {
-    background-color:  white;
+    background-color: #2A322C;
     border-radius: 8px;
     padding: 40px;
-    width: 100%;/* Aumenta el ancho */
-    height: 100vh; /* Aumenta la altura para que ocupe casi toda la pantalla */
-    margin: auto;
+    width: 80%; /* Aumenta el ancho */
+    max-width: 800px; /* Permite que crezca hasta este límite */
+    min-width: 500px; /* Asegura un tamaño mínimo */
+    height: auto;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centra el contenido verticalmente */
-    align-items: center; /* Centra el contenido horizontalmente */
+    justify-content: center;
+    color: white;
+    align-items: center;
 }
+
 .fila {
     display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Asegura que los elementos se alineen a la izquierda */
+    align-items: center; /* Alinea verticalmente */
+    justify-content: flex-start; 
     width: 100%;
-    margin: 15px 0;
+    margin: 15px 0; /* Margen solo arriba y abajo */
+    gap: 10px; /* Espacio entre el checkbox y el texto */
 }
 
 .fila input[type="checkbox"] {
-    transform: scale(1.2); /* Aumenta el tamaño para mejor visibilidad */
+    transform: scale(1.2); /* Ajuste del tamaño */
+    margin-right: 5px; /* Pequeño margen derecho para separar */
 }
 
 .fila label {
-    flex: none; /* Evita que el label se expanda */
-    text-align: left;
-    font-weight: bold;
+    font-size: 16px; /* Asegurar tamaño uniforme del texto */
+    white-space: nowrap; /* Evitar que las etiquetas se dividan en dos líneas */
 }
+
 .fila input {
     flex: 2;
     padding: 8px;
