@@ -136,3 +136,21 @@ export const modificarCliente = async (id, datos) => {
         return { success: false, error: error.response?.data || "Error desconocido" };
     }
 };
+
+export const eliminarProducto = async (id) => {
+    try {
+        const response = await axios.delete(`${API_URL}/productos-eliminar/${id}/`);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || "Error al eliminar el producto");
+    }
+};
+
+export const eliminarCliente = async (id) => {
+    try {
+        const response = await axios.delete(`${API_URL}/clientes-eliminar/${id}/`);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || "Error al eliminar el cliente");
+    }
+};

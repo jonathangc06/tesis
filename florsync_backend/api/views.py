@@ -188,3 +188,21 @@ def modificar_clientes(request, id):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response({"error": "Datos inválidos", "detalles": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def eliminar_clientes(request, id):
+    try:
+        cliente = Clientes.objects.get(cedula=id)
+        cliente.delete()
+        return Response({"message": "Cliente eliminado correctamente"}, status=status.HTTP_204_NO_CONTENT)
+    except Clientes.DoesNotExist:
+        return Response({"error": "Cliente no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(['DELETE'])
+def eliminar_producto(request, id):
+    try:
+        producto = Producto.objects.get(id_producto=id)
+        producto.delete()
+        return Response({"message": "Producto eliminado correctamente"}, status=status.HTTP_204_NO_CONTENT)
+    except Producto.DoesNotExist:
+        return Response({"error": "Producto no encontrado"}, status=status.HTTP_404_NOT_FOUND)

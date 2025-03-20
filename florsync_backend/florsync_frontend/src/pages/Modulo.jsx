@@ -14,6 +14,7 @@ const Modulo = () => {
         { tipo: "registros", nombre: "Añadir nuevo producto", imagen: "/images/nuevo_producto.png" },
         { tipo: "modificar", nombre: "Actualizar producto", imagen: "/images/actualizar_producto.png" },
         { tipo: "visualizar", nombre: "Visualizar inventario actual", imagen: "/images/inventario_actual.png" },
+        { tipo: "eliminar", nombre: "Eliminar producto", imagen: "/images/eliminar_cliente.png" },
       ],
     },
     ventas: {
