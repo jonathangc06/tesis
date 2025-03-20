@@ -11,7 +11,7 @@ const Modulo = () => {
     inventario: {
       titulo: "Inventario",
       opciones: [
-        { tipo: "registrar", nombre: "Añadir nuevo producto", imagen: "/images/nuevo_producto.png" },
+        { tipo: "registros", nombre: "Añadir nuevo producto", imagen: "/images/nuevo_producto.png" },
         { tipo: "modificar", nombre: "Actualizar producto", imagen: "/images/actualizar_producto.png" },
         { tipo: "visualizar", nombre: "Visualizar inventario actual", imagen: "/images/inventario_actual.png" },
       ],
@@ -26,7 +26,7 @@ const Modulo = () => {
     clientes: {
       titulo: "Clientes",
       opciones: [
-        { tipo: "registrar", nombre: "Registrar cliente", imagen: "/images/añadir_cliente.png" },
+        { tipo: "registros", nombre: "Registrar cliente", imagen: "/images/añadir_cliente.png" },
         { tipo: "modificar", nombre: "Modificar clientes existentes", imagen: "/images/editar_cliente.png" },
         { tipo: "visualizar-cliente", nombre: "Visualizar cliente", imagen: "/images/ver_cliente.png" },
         { tipo: "eliminar", nombre: "Eliminar cliente", imagen: "/images/eliminar_cliente.png" },
@@ -62,6 +62,7 @@ const Modulo = () => {
 
     switch (tipoOpcion) {
       case "registrar":
+        navigate(`/registrar/${nombreFormateado}`);
       case "registrar-venta":
         navigate(`/registrar-venta/`);
         break;
@@ -80,6 +81,8 @@ const Modulo = () => {
       case "visualizar-cliente": 
          navigate(`/visualizar-cliente/${nombreFormateado}`);
         break;
+        case "registros":
+        navigate(`/registrar/${nombreFormateado}`);
       default:
         console.warn("Opción no reconocida:", tipoOpcion);
     }
