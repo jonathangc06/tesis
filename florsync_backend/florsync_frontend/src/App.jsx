@@ -7,6 +7,8 @@ import Registrar from "./pages/Registrar";
 import Visualizar from "./pages/Visualizar"; 
 import VisualizarCliente from "./pages/visualizarCliente";
 import Modificar from "./pages/Modificar";
+import Ventas from "./pages/RealizaVentas"; 
+import RealizarVenta from "./pages/FinalizarVenta";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -33,6 +35,9 @@ function App() {
           <Route path="/visualizar/:tipo" element={<ProtectedRoute><Visualizar /></ProtectedRoute>} />
           <Route path="/Visualizar-cliente/:tipo" element={<ProtectedRoute><VisualizarCliente /></ProtectedRoute>} />
           <Route path="/modificar/:tipo" element={<ProtectedRoute><Modificar /></ProtectedRoute>} />
+          <Route path="/registrar-venta" element={<ProtectedRoute><Ventas /></ProtectedRoute>} />
+          <Route path="/realizarVenta" element={<ProtectedRoute><RealizarVenta /></ProtectedRoute>} />
+
 
   
           <Route path="*" element={<Navigate to="/login" replace />} />

@@ -63,7 +63,7 @@ const Modulo = () => {
     switch (tipoOpcion) {
       case "registrar":
       case "registrar-venta":
-        navigate(`/registrar/${nombreFormateado}`);
+        navigate(`/registrar-venta/`);
         break;
       case "modificar":
         navigate(`/modificar/${nombreFormateado}`);
