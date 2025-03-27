@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import obtener_usuarios, login_usuario, registrar_producto, obtener_productos, visualizar_cliente
 from .views import registrar_cliente, obtener_productoId, modificar_producto, modificar_clientes,obtener_clientesId
-from .views import eliminar_clientes, eliminar_producto
+from .views import eliminar_clientes, eliminar_producto, realizar_venta,obtener_clientes
 urlpatterns = [
     path('usuarios/', obtener_usuarios, name='obtener_usuarios'),  
     path('login/', login_usuario, name='login_usuario'), 
@@ -15,6 +15,8 @@ urlpatterns = [
     path('modificar-clientes/<int:id>/', modificar_clientes, name='modificar_clientes'),
     path('clientes-eliminar/<int:id>/', eliminar_clientes, name='eliminar_clientes'),
     path('productos-eliminar/<int:id>/', eliminar_producto, name='eliminar_producto'),
+    path('realizar-ventas/', realizar_venta, name='realizar_venta'),
+    path('clientes-obtener/', obtener_clientes, name='obtener_clientes'),
 
         
 ]

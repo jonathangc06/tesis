@@ -28,12 +28,13 @@ class Usuarios(models.Model):
     
 class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
+    cliente = models.ForeignKey(Clientes, on_delete=models.SET_NULL, null=True, blank=True)
     fecha = models.DateTimeField(auto_now_add=True)
-    usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
-    cliente = models.ForeignKey(Clientes, on_delete=models.CASCADE)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"Venta {self.id_venta}"
+        cliente_info = self.cliente.nombre if self.cliente else "Anónimo"
+        return f"Venta #{self.id_venta} - {cliente_info} - {self.fecha.strftime('%d/%m/%Y')}"
 
 class Producto(models.Model):
     id_producto = models.IntegerField(primary_key=True)
@@ -47,12 +48,14 @@ class Producto(models.Model):
 
 class DetalleVenta(models.Model):
     id_detalle = models.AutoField(primary_key=True)
-    venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
+    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='detalles')
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad = models.IntegerField()
+    cantidad = models.PositiveIntegerField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"Detalle {self.id_detalle} - Venta {self.venta.id_venta}"
+        return f"Detalle {self.id_detalle} - Venta {self.venta.id_venta} - {self.producto.nombre}"
 
 class Reporte(models.Model):
     id_reporte = models.AutoField(primary_key=True)

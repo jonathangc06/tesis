@@ -154,3 +154,15 @@ export const eliminarCliente = async (id) => {
         throw new Error(error.response?.data?.message || "Error al eliminar el cliente");
     }
 };
+
+export const registrarVenta = async (ventaData) => {
+    try {
+        const response = await axios.post(`${API_URL}/realizar-ventas/`, ventaData);
+        return response.data;
+    } catch (error) {
+        const mensaje = error.response?.data?.message || "Error al registrar la venta";
+        console.error("Registrar venta:", mensaje);
+        throw new Error(mensaje);
+    }
+};
+

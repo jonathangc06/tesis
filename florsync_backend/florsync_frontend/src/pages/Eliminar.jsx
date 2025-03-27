@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { obtenerProductoPorID,  eliminarProducto, eliminarCliente, obtenerClientesPorID } from "../api/test.api";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+    obtenerProductoPorID,
+    eliminarProducto,
+    eliminarCliente,
+    obtenerClientesPorID,
+} from "../api/test.api";
 import "../css/Modificar.css";
 
 const Eliminar = () => {
     const { tipo, id } = useParams();
+    const navigate = useNavigate();
     const [filtroID, setFiltroID] = useState(id || "");
     const [formData, setFormData] = useState({});
     const [error, setError] = useState("");
@@ -49,7 +55,13 @@ const Eliminar = () => {
     };
 
     const handleEliminar = async () => {
-        if (!window.confirm(`¿Estás seguro de que deseas eliminar este ${tipo === "eliminar-producto" ? "producto" : "cliente"}?`)) {
+        if (
+            !window.confirm(
+                `¿Estás seguro de que deseas eliminar este ${
+                    tipo === "eliminar-producto" ? "producto" : "cliente"
+                }?`
+            )
+        ) {
             return;
         }
         try {
@@ -66,6 +78,10 @@ const Eliminar = () => {
         }
     };
 
+    const volverInicioSesion = () => {
+        navigate("/menu"); 
+    };
+
     return (
         <div className="modificar-body">
             <div className="modificar-header">
@@ -80,21 +96,28 @@ const Eliminar = () => {
                 onChange={(e) => setFiltroID(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && buscarPorID()}
             />
-            <button className="btn-buscar" onClick={buscarPorID}>Buscar</button>
+            <button className="btn-buscar" onClick={buscarPorID}>
+                Buscar
+            </button>
 
             {error && <p className="error">{error}</p>}
 
             {formData && Object.keys(formData).length > 0 && (
                 <div className="modificar-container">
                     <div className="formulario">
-                        {(tipo === "eliminar-producto" ? datosProducto : datosCliente).map((dato) => (
-                            <div key={dato.campo} className="fila">
-                                <label>{dato.etiqueta}:</label>
-                                <span>{formData[dato.campo]}</span>
-                            </div>
-                        ))}
+                        {(tipo === "eliminar-producto" ? datosProducto : datosCliente).map(
+                            (dato) => (
+                                <div key={dato.campo} className="fila">
+                                    <label>{dato.etiqueta}:</label>
+                                    <span>{formData[dato.campo]}</span>
+                                </div>
+                            )
+                        )}
                         <button className="btn-eliminar" onClick={handleEliminar}>
                             Eliminar {tipo === "eliminar-producto" ? "Producto" : "Cliente"}
+                        </button>
+                        <button className="btn-volver" onClick={volverInicioSesion}>
+                            Volver al Inicio de Sesión
                         </button>
                     </div>
                 </div>

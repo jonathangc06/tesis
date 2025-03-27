@@ -1,11 +1,15 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Usuarios
+from .models import Venta
+from .models import DetalleVenta
 from .models import Clientes, Producto
 from .serializers import ClienteSerializer, ProductoSerializer
 from .serializers import UsuariosSerializer
 from django.contrib.auth.hashers import check_password
 from rest_framework import status
+from django.db import transaction
+from django.shortcuts import get_object_or_404
 
 
 @api_view(['GET'])
@@ -206,3 +210,87 @@ def eliminar_producto(request, id):
         return Response({"message": "Producto eliminado correctamente"}, status=status.HTTP_204_NO_CONTENT)
     except Producto.DoesNotExist:
         return Response({"error": "Producto no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['POST'])
+@transaction.atomic
+def realizar_venta(request):
+    try:
+        print("📥 [LOG] Datos recibidos:", request.data)
+
+        data = request.data
+        cliente_data = data.get("cliente")
+        productos = data.get("productos", [])
+        total = data.get("total", 0)
+
+        print("👤 [LOG] Cliente recibido:", cliente_data)
+        print("🛒 [LOG] Productos recibidos:", productos)
+        print("💲 [LOG] Total recibido:", total)
+
+        if not productos:
+            print("⚠️ [LOG] No se recibieron productos.")
+            return Response({"error": "Debe incluir al menos un producto"}, status=status.HTTP_400_BAD_REQUEST)
+
+        cliente = None
+        if cliente_data:
+            cedula = cliente_data.get("cedula")
+            if cedula:
+                cliente, _ = Clientes.objects.get_or_create(
+                    cedula=cedula,
+                    defaults={
+                        "nombre": cliente_data.get("nombre", ""),
+                        "telefono": cliente_data.get("telefono", ""),
+                        "correo": cliente_data.get("correo", "")
+                    }
+                )
+                print("✅ [LOG] Cliente procesado o creado:", cliente)
+
+        venta = Venta.objects.create(cliente=cliente, total=total)
+        print("🧾 [LOG] Venta creada:", venta)
+
+        for item in productos:
+            print("🔄 [LOG] Procesando producto:", item)
+            id_producto = item.get("id_producto")
+            cantidad = item.get("cantidad", 0)
+            precio = item.get("precio", 0)
+            total_item = item.get("total", 0)
+
+            if not id_producto or cantidad <= 0:
+                print("❌ [LOG] Producto inválido:", item)
+                return Response(
+                    {"error": "Producto inválido o cantidad no válida"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            producto = get_object_or_404(Producto, id_producto=id_producto)
+
+            if producto.cantidad < cantidad:
+                print(f"❌ [LOG] Stock insuficiente para {producto.nombre}")
+                return Response(
+                    {"error": f"Stock insuficiente para el producto {producto.nombre}"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            producto.cantidad -= cantidad
+            producto.save()
+
+            DetalleVenta.objects.create(
+                venta=venta,
+                producto=producto,
+                cantidad=cantidad,
+                precio=precio,
+                total=total_item
+            )
+            print("✅ [LOG] Detalle de venta creado")
+
+        print("🎉 [LOG] Venta registrada exitosamente")
+        return Response({"mensaje": "Venta registrada exitosamente"}, status=status.HTTP_201_CREATED)
+
+    except Exception as e:
+        print("🔥 [ERROR] Excepción no controlada:", str(e))
+        return Response({"error": f"Error al registrar la venta: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+def obtener_clientes(request):
+    clientes = Clientes.objects.all()
+    serializer = ClienteSerializer(clientes, many=True)
+    return Response(serializer.data)

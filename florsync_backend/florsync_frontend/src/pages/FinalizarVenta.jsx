@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { obtenerProductos } from "../api/test.api";
+import { obtenerProductos,registrarVenta } from "../api/test.api"; // Aquí podrías agregar registrarVenta
 import "../css/Carrito.css";
 
 const RealizarVenta = () => {
@@ -29,54 +29,30 @@ const RealizarVenta = () => {
         correo: ""
     });
 
-    const actualizarCantidad = (index, nuevaCantidad) => {
-        let cantidadNumerica = parseInt(nuevaCantidad, 10);
-    
-        if (isNaN(cantidadNumerica)) {
-            return; // Evita que el input se borre si el usuario está escribiendo
-        }
-    
-        setCarrito(prevCarrito =>
-            prevCarrito.map((producto, i) => {
-                if (i === index) {
-                    // Obtener el stock disponible
-                    const stockDisponible = productos.find(p => p.id_producto === producto.id_producto)?.cantidad || 1;
-    
-                    // No actualizar aún, solo permitir cambios temporales
-                    return { ...producto, cantidad: cantidadNumerica };
-                }
-                return producto;
-            })
-        );
-    };
-    
-    // Aplicar la validación final cuando el usuario salga del campo de input
     const [inputValores, setInputValores] = useState({});
 
     const manejarCambio = (index, nuevaCantidad) => {
-        // Permitir vacío temporalmente
         if (nuevaCantidad === "") {
             setInputValores(prev => ({ ...prev, [index]: "" }));
             return;
         }
-    
-        // Solo números enteros positivos
+
         const cantidadNumerica = parseInt(nuevaCantidad, 10);
         if (!isNaN(cantidadNumerica) && cantidadNumerica >= 1) {
             setInputValores(prev => ({ ...prev, [index]: cantidadNumerica }));
         }
     };
-    
+
     const validarCantidad = (index, id_producto) => {
         const stockDisponible = productos.find(p => p.id_producto === id_producto)?.cantidad || 1;
         let cantidadFinal = parseInt(inputValores[index], 10);
-    
+
         if (isNaN(cantidadFinal) || cantidadFinal < 1) {
-            cantidadFinal = 1; // Mínimo 1
+            cantidadFinal = 1;
         } else if (cantidadFinal > stockDisponible) {
-            cantidadFinal = stockDisponible; // Máximo stock disponible
+            cantidadFinal = stockDisponible;
         }
-    
+
         setCarrito(prevCarrito =>
             prevCarrito.map((producto, i) =>
                 i === index
@@ -88,8 +64,7 @@ const RealizarVenta = () => {
                     : producto
             )
         );
-    
-     
+
         setInputValores(prev => ({ ...prev, [index]: null }));
     };
 
@@ -105,6 +80,38 @@ const RealizarVenta = () => {
     }, []);
 
     const totalVenta = carrito.reduce((acc, producto) => acc + producto.total, 0);
+
+    const handleRealizarVenta = async () => {
+        if (carrito.length === 0) {
+            alert("No hay productos en el carrito.");
+            return;
+        }
+
+
+        const venta = {
+            cliente,
+            productos: carrito,
+            total: totalVenta,
+            fecha: new Date().toISOString()
+        };
+
+        try {
+            // Simula llamada al backend
+            // await registrarVenta(venta); <-- deberías implementarla en tu API
+            await registrarVenta(venta);
+
+            console.log("Venta realizada con éxito:", venta);
+            alert("¡Venta realizada con éxito!");
+
+            // Limpieza
+            setCarrito([]);
+            setCliente({ nombre: "", cedula: "", telefono: "", correo: "" });
+
+        } catch (error) {
+            console.error("Error al realizar la venta:", error);
+            alert("Ocurrió un error al registrar la venta.");
+        }
+    };
 
     return (
         <div className="carrito-container">
@@ -126,8 +133,8 @@ const RealizarVenta = () => {
                                 value={inputValores[index] ?? producto.cantidad} 
                                 min="1" 
                                 max={productos.find(p => p.id_producto === producto.id_producto)?.cantidad || 1} 
-                                onChange={(e) => manejarCambio(index, e.target.value)} // Permite vacío temporal
-                                onBlur={() => validarCantidad(index, producto.id_producto)} // Valida y corrige solo al salir
+                                onChange={(e) => manejarCambio(index, e.target.value)} 
+                                onBlur={() => validarCantidad(index, producto.id_producto)} 
                             />
                         </div>
                         <div className="producto-info">
@@ -174,7 +181,9 @@ const RealizarVenta = () => {
                 <h2>Total Final: <span>${totalVenta.toLocaleString()}</span></h2>
             </div>
 
-            <button className="boton-realizar-venta">Realizar venta</button>
+            <button className="boton-realizar-venta" onClick={handleRealizarVenta}>
+                Realizar venta
+            </button>
         </div>
     );
 };
