@@ -4,15 +4,37 @@ from .models import Clientes
 from .models import Producto
 
 
-class UsuariosSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Usuarios
-        fields = '__all__' 
+from rest_framework import serializers
+from .models import Venta, DetalleVenta, Producto
+
 
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Clientes
-        fields = '__all__'  
+        fields = '__all__' 
+
+class DetalleVentaSerializer(serializers.ModelSerializer):
+    producto = serializers.StringRelatedField()  # o usa producto.nombre si prefieres
+
+    class Meta:
+        model = DetalleVenta
+        fields = ['producto', 'cantidad', 'precio', 'total']
+
+class VentaSerializer(serializers.ModelSerializer):
+    cliente = ClienteSerializer()
+    detalles = DetalleVentaSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Venta
+        fields = ['id_venta', 'cliente', 'fecha', 'total', 'detalles']
+
+   
+
+class UsuariosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuarios
+        fields = '__all__' 
+ 
 
 class ProductoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,3 +49,4 @@ class ProductoSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError({"id_producto": "Este ID ya existe. No se puede duplicar."})
 
             return super().create(validated_data)
+        

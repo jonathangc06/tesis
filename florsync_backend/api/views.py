@@ -6,11 +6,12 @@ from .models import DetalleVenta
 from .models import Clientes, Producto
 from .serializers import ClienteSerializer, ProductoSerializer
 from .serializers import UsuariosSerializer
-from django.contrib.auth.hashers import check_password
 from rest_framework import status
 from django.db import transaction
 from django.shortcuts import get_object_or_404
-
+from datetime import datetime
+from .serializers import VentaSerializer
+from datetime import datetime
 
 @api_view(['GET'])
 def obtener_usuarios(request):
@@ -222,57 +223,52 @@ def realizar_venta(request):
         productos = data.get("productos", [])
         total = data.get("total", 0)
 
-        print("👤 [LOG] Cliente recibido:", cliente_data)
-        print("🛒 [LOG] Productos recibidos:", productos)
-        print("💲 [LOG] Total recibido:", total)
-
         if not productos:
-            print("⚠️ [LOG] No se recibieron productos.")
             return Response({"error": "Debe incluir al menos un producto"}, status=status.HTTP_400_BAD_REQUEST)
 
         cliente = None
         if cliente_data:
             cedula = cliente_data.get("cedula")
             if cedula:
-                cliente, _ = Clientes.objects.get_or_create(
+                cliente, created = Clientes.objects.get_or_create(
                     cedula=cedula,
                     defaults={
-                        "nombre": cliente_data.get("nombre", ""),
+                        "nombre_cliente": cliente_data.get("nombre_cliente", ""),
                         "telefono": cliente_data.get("telefono", ""),
                         "correo": cliente_data.get("correo", "")
                     }
                 )
-                print("✅ [LOG] Cliente procesado o creado:", cliente)
 
+                # **Incrementar el contador de compras solo si el cliente ya existía**
+                if not created:
+                    cliente.compras += 1
+                    cliente.save()
+                
+                print(f"✅ [LOG] Cliente procesado: {cliente.nombre_cliente}, Ventas totales: {cliente.compras}")
+
+        # **Crear la venta**
         venta = Venta.objects.create(cliente=cliente, total=total)
-        print("🧾 [LOG] Venta creada:", venta)
+        print(f"🧾 [LOG] Venta creada: {venta.id_venta}")
 
         for item in productos:
-            print("🔄 [LOG] Procesando producto:", item)
             id_producto = item.get("id_producto")
             cantidad = item.get("cantidad", 0)
             precio = item.get("precio", 0)
             total_item = item.get("total", 0)
 
             if not id_producto or cantidad <= 0:
-                print("❌ [LOG] Producto inválido:", item)
-                return Response(
-                    {"error": "Producto inválido o cantidad no válida"},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
+                return Response({"error": "Producto inválido o cantidad no válida"}, status=status.HTTP_400_BAD_REQUEST)
 
             producto = get_object_or_404(Producto, id_producto=id_producto)
 
             if producto.cantidad < cantidad:
-                print(f"❌ [LOG] Stock insuficiente para {producto.nombre}")
-                return Response(
-                    {"error": f"Stock insuficiente para el producto {producto.nombre}"},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
+                return Response({"error": f"Stock insuficiente para el producto {producto.nombre}"}, status=status.HTTP_400_BAD_REQUEST)
 
+            # **Actualizar stock del producto**
             producto.cantidad -= cantidad
             producto.save()
 
+            # **Crear detalle de venta**
             DetalleVenta.objects.create(
                 venta=venta,
                 producto=producto,
@@ -280,17 +276,38 @@ def realizar_venta(request):
                 precio=precio,
                 total=total_item
             )
-            print("✅ [LOG] Detalle de venta creado")
 
         print("🎉 [LOG] Venta registrada exitosamente")
         return Response({"mensaje": "Venta registrada exitosamente"}, status=status.HTTP_201_CREATED)
 
     except Exception as e:
-        print("🔥 [ERROR] Excepción no controlada:", str(e))
+        print(f"🔥 [ERROR] Excepción no controlada: {e}")
         return Response({"error": f"Error al registrar la venta: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 @api_view(['GET'])
 def obtener_clientes(request):
     clientes = Clientes.objects.all()
     serializer = ClienteSerializer(clientes, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])  # ✅ NECESARIO
+def obtener_ventas(request):
+    try:
+        fecha_param = request.GET.get('fecha')
+
+        if fecha_param:
+            try:
+                fecha_obj = datetime.strptime(fecha_param, "%Y-%m-%d").date()
+                ventas = Venta.objects.filter(fecha__date=fecha_obj)
+            except ValueError:
+                return Response({'message': 'Formato de fecha inválido. Use YYYY-MM-DD.'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            ventas = Venta.objects.all()
+
+        serializer = VentaSerializer(ventas, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

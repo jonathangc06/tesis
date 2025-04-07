@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { obtenerProductos } from "../api/test.api";
-import "../css/Visualizar.css"; // Importamos los estilos
+import "../css/Visualizar.css"; 
 
 const Visualizar = () => {
     const [productos, setProductos] = useState([]);

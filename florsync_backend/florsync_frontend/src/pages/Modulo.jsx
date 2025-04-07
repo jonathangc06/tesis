@@ -21,7 +21,7 @@ const Modulo = () => {
       titulo: "Ventas",
       opciones: [
         { tipo: "registrar-venta", nombre: "Registrar venta", imagen: "/images/vender.png" },
-        { tipo: "visualizar", nombre: "Historial de ventas", imagen: "/images/historial.png" },
+        { tipo: "visualizar-historial", nombre: "Historial de ventas", imagen: "/images/historial.png" },
       ],
     },
     clientes: {
@@ -84,6 +84,10 @@ const Modulo = () => {
         break;
         case "registros":
         navigate(`/registrar/${nombreFormateado}`);
+        break;
+      case 'visualizar-historial':
+        navigate(`/visualizar-historial/${nombreFormateado}`);
+
       default:
         console.warn("Opción no reconocida:", tipoOpcion);
     }

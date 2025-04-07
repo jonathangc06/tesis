@@ -1,13 +1,12 @@
-.ventas-body {
-    background-color: white;
-    color: black;
+
+.menu-body {
+    background-color: #f0f2f5;
+    color: black; /* Color del texto */
     font-family: Arial, sans-serif;
-    margin: 0;
+    margin: 0; /* Eliminar márgenes */
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
-    justify-content: flex-start; 
 }
 
 /* ---- ENCABEZADO ---- */
@@ -54,7 +53,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
-    max-width: 1000px;
     margin: auto;
 }
 

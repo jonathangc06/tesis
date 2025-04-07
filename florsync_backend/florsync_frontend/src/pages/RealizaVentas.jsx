@@ -14,11 +14,16 @@ const Ventas = () => {
     const navigate = useNavigate(); // Hook para la navegación
 
     useEffect(() => {
-        document.body.classList.add("ventas-body");
+        document.body.classList.add("menu-body");
         return () => {
-            document.body.classList.remove("ventas-body");
+            document.body.classList.remove("menu-body");
         };
     }, []);
+
+     useEffect(() => {
+                  document.body.classList.add("menu-body");
+                  return () => document.body.classList.remove("menu-body");
+              }, []);
 
     useEffect(() => {
         obtenerProductos()

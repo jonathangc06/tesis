@@ -7,8 +7,8 @@ class Clientes(models.Model):
     correo = models.EmailField(max_length=100, blank=True, null=True)
     nombre_cliente = models.CharField(max_length=100)
     telefono = models.CharField(max_length=20, blank=True, null=True)
-    compras = models.IntegerField(default=0)  # Nuevo campo: cantidad de compras, inicia en 0
-    fecha_registro = models.DateField(auto_now_add=True)  # Nuevo campo: fecha automática al registrar
+    compras = models.IntegerField(default=0)  
+    fecha_registro = models.DateField(auto_now_add=True)  
 
     def __str__(self):
         return self.nombre_cliente
@@ -33,7 +33,7 @@ class Venta(models.Model):
     total = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        cliente_info = self.cliente.nombre if self.cliente else "Anónimo"
+        cliente_info = self.cliente.nombre_cliente if self.cliente else "Anónimo"
         return f"Venta #{self.id_venta} - {cliente_info} - {self.fecha.strftime('%d/%m/%Y')}"
 
 class Producto(models.Model):

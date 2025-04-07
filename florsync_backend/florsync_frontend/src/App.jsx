@@ -10,6 +10,8 @@ import Modificar from "./pages/Modificar";
 import Ventas from "./pages/RealizaVentas"; 
 import RealizarVenta from "./pages/FinalizarVenta";
 import Eliminar from "./pages/Eliminar";
+import VentasMostrar from "./pages/VisualizarVentas";
+
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -37,7 +39,9 @@ function App() {
           <Route path="/modificar/:tipo" element={<ProtectedRoute><Modificar /></ProtectedRoute>} />
           <Route path="/registrar-venta" element={<ProtectedRoute><Ventas /></ProtectedRoute>} />
           <Route path="/realizarVenta" element={<ProtectedRoute><RealizarVenta /></ProtectedRoute>} />
+          <Route path="/realizarVenta" element={<ProtectedRoute><RealizarVenta /></ProtectedRoute>} />
           <Route path="/eliminar/:tipo" element={<ProtectedRoute><Eliminar /></ProtectedRoute>} />
+          <Route path="/visualizar-historial/:tipo" element={<ProtectedRoute><VentasMostrar /></ProtectedRoute>} />
 
   
           <Route path="*" element={<Navigate to="/login" replace />} />

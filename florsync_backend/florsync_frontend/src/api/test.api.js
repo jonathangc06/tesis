@@ -157,12 +157,29 @@ export const eliminarCliente = async (id) => {
 
 export const registrarVenta = async (ventaData) => {
     try {
+        console.log("📤 Enviando datos a la API:", ventaData);  // Ver qué se está enviando
+
         const response = await axios.post(`${API_URL}/realizar-ventas/`, ventaData);
+
+        console.log("📥 Respuesta de la API:", response.data); // Ver la respuesta de la API
+
         return response.data;
     } catch (error) {
-        const mensaje = error.response?.data?.message || "Error al registrar la venta";
+        console.error("🔥 Error en registrarVenta:", error);
+
+        const mensaje = error.response?.data?.message || error.response?.data || "Error al registrar la venta";
+
         console.error("Registrar venta:", mensaje);
         throw new Error(mensaje);
     }
 };
 
+export const obtenerVentas = async (fecha) => {
+    try {
+        const params = fecha ? { fecha } : {};
+        const response = await axios.get(`${API_URL}/ventas-visualizar/`, { params });
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || "Error al obtener las ventas");
+    }
+};
