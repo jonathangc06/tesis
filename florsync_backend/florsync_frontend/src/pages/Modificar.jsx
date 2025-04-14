@@ -125,7 +125,7 @@ const Modificar = () => {
                 <>
                     <input
                         type="text"
-                        className="buscador"
+                        className="buscador-modificar"
                         placeholder="Buscar por ID"
                         value={filtroID}
                         onChange={(e) => setFiltroID(e.target.value)}

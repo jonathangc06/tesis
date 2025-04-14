@@ -102,60 +102,73 @@ const RealizarVenta = () => {
     };
 
     return (
-        <div className="carrito-container">
-            <h1 className="titulo">Realizar <span>venta</span></h1>
-            {carrito.length === 0 ? (
-                <p className="mensaje-vacio">No hay productos seleccionados.</p>
-            ) : (
-                carrito.map((producto, index) => (
-                    <div key={index} className="producto-carrito">
-                        <p>Nombre: {producto.nombre}</p>
-                        <input 
-                            type="number" 
-                            value={inputValores[index] ?? producto.cantidad} 
-                            min="1" 
-                            max={productos.find(p => p.id_producto === producto.id_producto)?.cantidad || 1} 
-                            onChange={(e) => manejarCambio(index, e.target.value)} 
-                            onBlur={() => validarCantidad(index, producto.id_producto)} 
-                        />
-                        <p>Precio total: ${producto.total.toLocaleString()}</p>
-                        <button onClick={() => eliminarProducto(index)}>🗑 Eliminar</button>
-                    </div>
-                ))
-            )}
-            <div className="cliente-info">
-                <input 
-                    type="text" 
-                    placeholder="Cédula" 
-                    value={cliente.cedula} 
-                    onChange={(e) => {
-                        setCliente({ ...cliente, cedula: e.target.value });
-                        buscarCliente(e.target.value);
-                    }}
-                />
-                <input 
-                    type="text" 
-                    placeholder="Nombre" 
-                    value={cliente. nombre_cliente} 
-                    onChange={(e) => setCliente({ ...cliente,  nombre_cliente: e.target.value })} 
-                />
-                <input 
-                    type="text" 
-                    placeholder="Teléfono" 
-                    value={cliente.telefono} 
-                    onChange={(e) => setCliente({ ...cliente, telefono: e.target.value })} 
-                />
-                <input 
-                    type="email" 
-                    placeholder="Correo" 
-                    value={cliente.correo} 
-                    onChange={(e) => setCliente({ ...cliente, correo: e.target.value })} 
-                />
+        <div className="carrito-body">
+            <div className="carrito-header">
+                <h1 className="titulo">Realizar <span>venta</span></h1>
             </div>
-            <h2>Total: ${totalVenta.toLocaleString()}</h2>
-            <button onClick={handleRealizarVenta}>Realizar venta</button>
+    
+            <div className="carrito-container">
+                {carrito.length === 0 ? (
+                    <p className="mensaje-vacio">No hay productos seleccionados.</p>
+                ) : (
+                    carrito.map((producto, index) => (
+                        <div key={index} className="producto-carrito">
+                            <p>Nombre: {producto.nombre}</p>
+                            <input 
+                                type="number" 
+                                value={inputValores[index] ?? producto.cantidad} 
+                                min="1" 
+                                max={productos.find(p => p.id_producto === producto.id_producto)?.cantidad || 1} 
+                                onChange={(e) => manejarCambio(index, e.target.value)} 
+                                onBlur={() => validarCantidad(index, producto.id_producto)} 
+                            />
+                            <p>Precio total: ${producto.total.toLocaleString()}</p>
+                            <button onClick={() => eliminarProducto(index)}>🗑 Eliminar</button>
+                        </div>
+                    ))
+                )}
+    
+                <div className="cliente-info">
+                    <input 
+                        type="text" 
+                        placeholder="Cédula" 
+                        value={cliente.cedula} 
+                        onChange={(e) => {
+                            setCliente({ ...cliente, cedula: e.target.value });
+                            buscarCliente(e.target.value);
+                        }}
+                    />
+                    <input 
+                        type="text" 
+                        placeholder="Nombre" 
+                        value={cliente.nombre_cliente} 
+                        onChange={(e) => setCliente({ ...cliente, nombre_cliente: e.target.value })} 
+                    />
+                    <input 
+                        type="text" 
+                        placeholder="Teléfono" 
+                        value={cliente.telefono} 
+                        onChange={(e) => setCliente({ ...cliente, telefono: e.target.value })} 
+                    />
+                    <input 
+                        type="email" 
+                        placeholder="Correo" 
+                        value={cliente.correo} 
+                        onChange={(e) => setCliente({ ...cliente, correo: e.target.value })} 
+                    />
+                </div>
+    
+                <div className="total-final">
+                    <h2>Total: ${totalVenta.toLocaleString()}</h2>
+                </div>
+    
+                <button className="boton-realizar-venta" onClick={handleRealizarVenta}>
+                    Realizar venta
+                </button>
+            </div>
         </div>
     );
+    
 };
 
 export default RealizarVenta;

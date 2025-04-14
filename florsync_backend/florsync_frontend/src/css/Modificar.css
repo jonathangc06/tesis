@@ -26,13 +26,25 @@
     z-index: 1000;
 }
 
-.buscador {
+.buscador-modificar {
     width: 80%;
-    max-width: 500px;
+    max-width: 600px; /* Aumentar el ancho máximo para que sea más amplio */
     margin-top: 30px;
     display: flex;
-    justify-content: center;
-    border: 2px solid black;
+    justify-content: space-between; /* Cambié a space-between para más espacio entre los elementos */
+    border: 5px solid black; /* Borde más grueso y negro */
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1); /* Añadir sombra para hacer que el buscador se destaque más */
+}
+.buscador input {
+    flex: 1; /* Se asegura de que el input ocupe la mayor parte del espacio */
+    padding: 10px;
+    font-size: 16px; /* Hacer el texto más grande */
+    border: none;
+    border-radius: 5px;
+    outline: none;
 }
 
 .btn-buscar {
@@ -48,6 +60,10 @@
     transition: background-color 0.3s, transform 0.2s;
 }
 
+.buscador input:focus {
+    border-color: #019C18; /* El borde se pone más marcado al hacer focus */
+    box-shadow: 0 0 5px rgba(0, 156, 24, 0.5); /* Sombra sutil al hacer focus */
+}
 .btn-buscar:hover {
     background-color: #bbb;
     transform: scale(1.05);

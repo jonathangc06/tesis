@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { obtenerVentas } from "../api/test.api";
 import "../css/VentasMostrar.css";
 
+
 const VentasMostrar = () => {
   const [ventas, setVentas] = useState([]);
   const [fechaFiltro, setFechaFiltro] = useState('');
   const [fechaConsultada, setFechaConsultada] = useState('');
 
-  // ✅ Obtener fecha local en formato YYYY-MM-DD
   const obtenerFechaLocal = () => {
     const ahora = new Date();
     const anio = ahora.getFullYear();
@@ -51,7 +51,6 @@ const VentasMostrar = () => {
     }
   };
 
-  // ✅ Mostrar solo fecha sin hora (para el título)
   const formatearSoloFecha = (fecha) => {
     if (!fecha) return "Fecha inválida";
     const partes = fecha.split("-");
@@ -95,9 +94,11 @@ const VentasMostrar = () => {
 
   return (
     <div className="ventas-container">
-      <h1 className="titulo">
-        Historial de <span>Ventas</span>
-      </h1>
+      <div className="ventas-header">
+        <h1 className="titulo">
+          Historial de <span>Ventas</span>
+        </h1>
+      </div>
 
       <div className="filtro-fecha">
         <input

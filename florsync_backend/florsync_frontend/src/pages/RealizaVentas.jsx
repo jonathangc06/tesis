@@ -109,7 +109,7 @@ const Ventas = () => {
                 </div>
 
                 {/* Botón del Carrito pegado al encabezado */}
-                <button className="Realizar venta" onClick={irAlCarrito}>
+                <button className="realizar-venta" onClick={irAlCarrito}>
                      Realizar venta ({carrito.length})
                 </button>
             </div>
@@ -126,23 +126,33 @@ const Ventas = () => {
                                 <p><strong>Nombre del producto:</strong> {producto.nombre}</p>
                                 <p><strong>Precio:</strong> ${parseFloat(producto.precio).toFixed(0)}</p>
                                 <p><strong>Stock:</strong> {producto.cantidad}</p>
-                                <button onClick={() => agregarAlCarrito(producto)}>Añadir al Carrito</button>
-                                {mostrarCantidad[producto.id_producto] && (
+                                <button className="boton-anadir-carrito" onClick={() => agregarAlCarrito(producto)}>
+                                    Añadir al Carrito
+                                </button> 
+                                 {mostrarCantidad[producto.id_producto] && (
                                     <div>
                                         <input
-                                                type="number"
-                                                min="1"
-                                                max={producto.cantidad}
-                                                placeholder="Cantidad"
-                                                value={ventas[producto.id_producto] || ""}
-                                                onChange={(e) => {
-                                                    const value = parseInt(e.target.value, 10);
-                                                    if (!isNaN(value) && value > 0 && value <= producto.cantidad) {
-                                                        setVentas({ ...ventas, [producto.id_producto]: value });
-                                                    }
-                                                }}
-                                            />
-                                        <button onClick={() => confirmarAgregarCarrito(producto)}>Confirmar</button>
+                                            type="number"
+                                            min="1"
+                                            max={producto.cantidad}
+                                            placeholder="Cantidad"
+                                            value={ventas.hasOwnProperty(producto.id_producto) ? ventas[producto.id_producto] : ""}
+                                            onChange={(e) => {
+                                                const inputValue = e.target.value;
+
+                                                // Permitir cadena vacía mientras se escribe
+                                                if (inputValue === "") {
+                                                    setVentas({ ...ventas, [producto.id_producto]: "" });
+                                                    return;
+                                                }
+
+                                                const value = parseInt(inputValue, 10);
+                                                if (!isNaN(value) && value > 0 && value <= producto.cantidad) {
+                                                    setVentas({ ...ventas, [producto.id_producto]: value });
+                                                }
+                                            }}
+                                        />
+                                            <button onClick={() => confirmarAgregarCarrito(producto)}>Confirmar</button>
                                     </div>
                                 )}
                             </div>

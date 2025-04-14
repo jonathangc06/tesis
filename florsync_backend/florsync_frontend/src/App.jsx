@@ -16,12 +16,9 @@ import VentasMostrar from "./pages/VisualizarVentas";
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
-  console.log("Estado de autenticación:", isAuthenticated); 
-
-  if (isAuthenticated === null) return <div>Cargando...</div>; 
-
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
+
 
 function App() {
   return (
