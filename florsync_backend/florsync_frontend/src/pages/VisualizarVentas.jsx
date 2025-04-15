@@ -67,7 +67,6 @@ const VentasMostrar = () => {
     });
   };
 
-  // ✅ Mostrar fecha con hora (para cada venta)
   const formatearFechaHora = (fecha) => {
     if (!fecha) return "Fecha inválida";
     const fechaObj = new Date(fecha);

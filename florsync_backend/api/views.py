@@ -10,8 +10,10 @@ from rest_framework import status
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from datetime import datetime
+from django.utils import timezone
 from .serializers import VentaSerializer
 from datetime import datetime
+from django.db.models import Sum
 
 @api_view(['GET'])
 def obtener_usuarios(request):
@@ -311,3 +313,74 @@ def obtener_ventas(request):
 
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+
+@api_view(['GET'])
+def obtener_informe(request, tipo):
+    print(f"Tipo recibido: {tipo}")
+    try:
+        fecha_param = request.query_params.get('fecha')
+        ahora = timezone.now()
+
+        # Si hay una fecha, parsearla
+        if fecha_param:
+            try:
+                if tipo == 'informe-diario':
+                    # Parsear la fecha diaria
+                    fecha = datetime.strptime(fecha_param, "%Y-%m-%d").date()
+                    inicio = timezone.make_aware(datetime.combine(fecha, datetime.min.time()))
+                    fin = timezone.make_aware(datetime.combine(fecha, datetime.max.time()))
+                elif tipo == 'informe-mensual':
+                    # Parsear la fecha mensual
+                    fecha = datetime.strptime(fecha_param, "%Y-%m").date()
+                    inicio = timezone.make_aware(datetime(fecha.year, fecha.month, 1))
+                    # Calcular fin del mes
+                    if fecha.month == 12:
+                        fin = timezone.make_aware(datetime(fecha.year + 1, 1, 1)) - timezone.timedelta(seconds=1)
+                    else:
+                        fin = timezone.make_aware(datetime(fecha.year, fecha.month + 1, 1)) - timezone.timedelta(seconds=1)
+                else:
+                    return Response({'message': 'Tipo de informe inválido. Use "informe-diario" o "informe-mensual".'}, status=400)
+            except ValueError:
+                return Response({'message': 'Formato de fecha inválido.'}, status=400)
+        else:
+            # Sin fecha → usar actual
+            if tipo == 'informe-diario':
+                inicio = ahora.replace(hour=0, minute=0, second=0, microsecond=0)
+                fin = ahora
+            elif tipo == 'informe-mensual':
+                inicio = ahora.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+                fin = ahora
+            else:
+                return Response({'message': 'Tipo de informe inválido. Use "informe-diario" o "informe-mensual".'}, status=400)
+
+        # Consultar las ventas en el rango de fechas
+        ventas = Venta.objects.filter(fecha__range=(inicio, fin))
+        detalles = DetalleVenta.objects.filter(venta__in=ventas)
+
+        # Calcular los datos agregados
+        numero_ventas = ventas.count()
+        total_vendido = ventas.aggregate(total=Sum('total'))['total'] or 0
+
+        # Obtener los top productos por cantidad y valor
+        top_productos_cantidad = detalles.values('producto__nombre') \
+            .annotate(total_cantidad=Sum('cantidad')) \
+            .order_by('-total_cantidad')[:5]
+
+        top_productos_valor = detalles.values('producto__nombre') \
+            .annotate(valor_total=Sum('total')) \
+            .order_by('-valor_total')[:5]
+
+        # Devolver la respuesta con los resultados
+        return Response({
+            'tipo_informe': tipo,
+            'fecha_inicio': inicio.strftime("%Y-%m-%d %H:%M"),
+            'fecha_fin': fin.strftime("%Y-%m-%d %H:%M"),
+            'numero_ventas': numero_ventas,
+            'total_vendido': float(total_vendido),
+            'top_5_productos_por_cantidad': list(top_productos_cantidad),
+            'top_5_productos_por_valor': list(top_productos_valor),
+        }, status=200)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)

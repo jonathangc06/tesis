@@ -2,10 +2,13 @@ from rest_framework import serializers
 from .models import Usuarios
 from .models import Clientes
 from .models import Producto
-
-
-from rest_framework import serializers
 from .models import Venta, DetalleVenta, Producto
+from .models import Reporte
+
+class ReporteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reporte
+        fields = '__all__'
 
 
 class ClienteSerializer(serializers.ModelSerializer):

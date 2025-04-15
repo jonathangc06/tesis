@@ -6,7 +6,6 @@ const Modulo = () => {
   const { nombre } = useParams();
   const navigate = useNavigate();
 
-  // Diccionario de módulos con imágenes en lugar de íconos
   const modulos = {
     inventario: {
       titulo: "Inventario",
@@ -56,7 +55,6 @@ const Modulo = () => {
     return <h1 className="error">Módulo no encontrado</h1>;
   }
 
-  // Manejar la navegación al hacer clic en una opción
   const handleClick = (opcion) => {
     const tipoOpcion = opcion.tipo;
     const nombreFormateado = opcion.nombre.toLowerCase().replace(/\s/g, "-");
@@ -64,6 +62,7 @@ const Modulo = () => {
     switch (tipoOpcion) {
       case "registrar":
         navigate(`/registrar/${nombreFormateado}`);
+        break;
       case "registrar-venta":
         navigate(`/registrar-venta/`);
         break;
@@ -87,7 +86,7 @@ const Modulo = () => {
         break;
       case 'visualizar-historial':
         navigate(`/visualizar-historial/${nombreFormateado}`);
-
+        break;
       default:
         console.warn("Opción no reconocida:", tipoOpcion);
     }

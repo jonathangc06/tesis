@@ -183,3 +183,11 @@ export const obtenerVentas = async (fecha) => {
         throw new Error(error.response?.data?.message || "Error al obtener las ventas");
     }
 };
+
+
+export const obtenerInforme = async (tipo, fecha) => {
+  const params = {};
+  if (fecha) params.fecha = fecha;
+  const response = await axios.get(`http://localhost:8000/api/informe/${tipo}/`, { params });
+  return response;
+};

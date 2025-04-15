@@ -59,13 +59,13 @@ class DetalleVenta(models.Model):
 
 class Reporte(models.Model):
     id_reporte = models.AutoField(primary_key=True)
-    tipo_reporte = models.CharField(max_length=50)
+    tipo_reporte = models.CharField(max_length=50)  # 'diario' o 'mensual'
     fecha = models.DateTimeField(auto_now_add=True)
     total_vendido = models.DecimalField(max_digits=10, decimal_places=2)
-    venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Reporte {self.id_reporte}"
+        return f"Reporte {self.tipo_reporte} - {self.fecha.strftime('%d/%m/%Y')}"
+
 
 class ReporteProductosVendidos(models.Model):
     reporte = models.ForeignKey(Reporte, on_delete=models.CASCADE)

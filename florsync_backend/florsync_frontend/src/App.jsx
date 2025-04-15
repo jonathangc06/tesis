@@ -11,6 +11,7 @@ import Ventas from "./pages/RealizaVentas";
 import RealizarVenta from "./pages/FinalizarVenta";
 import Eliminar from "./pages/Eliminar";
 import VentasMostrar from "./pages/VisualizarVentas";
+import Informe from "./pages/Informe";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -39,6 +40,7 @@ function App() {
           <Route path="/realizarVenta" element={<ProtectedRoute><RealizarVenta /></ProtectedRoute>} />
           <Route path="/eliminar/:tipo" element={<ProtectedRoute><Eliminar /></ProtectedRoute>} />
           <Route path="/visualizar-historial/:tipo" element={<ProtectedRoute><VentasMostrar /></ProtectedRoute>} />
+          <Route path="/informe/:tipo" element={<ProtectedRoute><Informe /></ProtectedRoute>} />
 
   
           <Route path="*" element={<Navigate to="/login" replace />} />
