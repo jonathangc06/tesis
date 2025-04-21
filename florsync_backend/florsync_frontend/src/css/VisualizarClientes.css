@@ -27,7 +27,6 @@
   border-radius: 0px;
 }
 
-
 .search-container {
   width: 80%;
   max-width: 500px;
@@ -47,13 +46,11 @@
   outline: none;
 }
 
-
 .clientes-container {
   display: flex;
   justify-content: center;
   width: 100%;
 }
-
 
 .table {
   width: 90vw; 
@@ -66,7 +63,6 @@
   font-size: 18px; 
 }
 
-
 .table td {
   padding: 12px;
   text-align: left;
@@ -75,6 +71,27 @@
 
 .table tr {
   border-bottom: 1px solid white;
+}
+
+/* --- NUEVO: ESTILO DEL BOTÓN "ANTERIOR" --- */
+.volver-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-volver {
+  padding: 10px 20px;
+  background-color: #019C18; /* Verde del encabezado */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-volver:hover {
+  background-color: #016F12; /* Un verde más oscuro para el hover */
 }
 
 /* --- RESPONSIVE --- */
