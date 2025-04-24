@@ -90,7 +90,7 @@ const Eliminar = () => {
 
             <input
                 type="text"
-                className="buscador"
+                className="buscador-eliminar"
                 placeholder="Buscar por ID"
                 value={filtroID}
                 onChange={(e) => setFiltroID(e.target.value)}

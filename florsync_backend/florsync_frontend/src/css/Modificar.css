@@ -8,7 +8,7 @@
     align-items: center;
     height: 100vh;
     justify-content: flex-start; 
-    padding-top: 80px; 
+    padding-top: 90px; 
 }
 
 .modificar-header {
@@ -28,20 +28,20 @@
 
 .buscador-modificar {
     width: 80%;
-    max-width: 600px; /* Aumentar el ancho máximo para que sea más amplio */
+    max-width: 600px; 
     margin-top: 30px;
     display: flex;
-    justify-content: space-between; /* Cambié a space-between para más espacio entre los elementos */
-    border: 5px solid black; /* Borde más grueso y negro */
+    justify-content: space-between; 
+    border: 5px solid black; 
     border-radius: 10px;
     padding: 10px;
     background-color: #f9f9f9;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1); /* Añadir sombra para hacer que el buscador se destaque más */
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1); 
 }
 .buscador input {
-    flex: 1; /* Se asegura de que el input ocupe la mayor parte del espacio */
+    flex: 1; 
     padding: 10px;
-    font-size: 16px; /* Hacer el texto más grande */
+    font-size: 16px; 
     border: none;
     border-radius: 5px;
     outline: none;
@@ -50,8 +50,8 @@
 .btn-buscar {
     width: 100%;
     padding: 15px;
-    font-size: 18px; /* Hacer el texto más grande */
-    border-radius: 25px; /* Bordes redondeados */
+    font-size: 18px; 
+    border-radius: 25px; 
     text-align: center;
     background-color: #ddd;
     outline: none;
@@ -61,8 +61,8 @@
 }
 
 .buscador input:focus {
-    border-color: #019C18; /* El borde se pone más marcado al hacer focus */
-    box-shadow: 0 0 5px rgba(0, 156, 24, 0.5); /* Sombra sutil al hacer focus */
+    border-color: #019C18; 
+    box-shadow: 0 0 5px rgba(0, 156, 24, 0.5); 
 }
 .btn-buscar:hover {
     background-color: #bbb;
@@ -73,9 +73,9 @@
     background-color: #2A322C;
     border-radius: 8px;
     padding: 40px;
-    width: 80%; /* Aumenta el ancho */
-    max-width: 800px; /* Permite que crezca hasta este límite */
-    min-width: 500px; /* Asegura un tamaño mínimo */
+    width: 80%; 
+    max-width: 800px; 
+    min-width: 500px; 
     height: auto;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     margin-top: 30px;
@@ -88,28 +88,35 @@
 
 .fila {
     display: flex;
-    align-items: center; /* Alinea verticalmente */
-    justify-content: flex-start; 
+    align-items: center;
+    margin-bottom: 15px;
     width: 100%;
-    margin: 15px 0; /* Margen solo arriba y abajo */
-    gap: 10px; /* Espacio entre el checkbox y el texto */
-}
-
-.fila input[type="checkbox"] {
-    transform: scale(1.2); /* Ajuste del tamaño */
-    margin-right: 5px; /* Pequeño margen derecho para separar */
+    max-width: 600px;
 }
 
 .fila label {
-    font-size: 16px; /* Asegurar tamaño uniforme del texto */
-    white-space: nowrap; /* Evitar que las etiquetas se dividan en dos líneas */
+    width: 150px; 
+    font-weight: bold;
+    font-size: 16px;
 }
 
-.fila input {
-    flex: 2;
-    padding: 8px;
-    text-align: center;
+.columna {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
+
+.input-editable {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
 
 .input-deshabilitado {
     background-color: #ddd;
@@ -138,4 +145,22 @@
     font-size: 18px;
     width: 100%;
     margin-top: 10px;
+}
+
+.buscador-eliminar{
+    width: 80%;
+    max-width: 600px; 
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between; 
+    border: 5px solid black; 
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1); 
+}
+.columna {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; 
 }

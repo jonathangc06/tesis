@@ -37,9 +37,9 @@
     justify-content: space-between;
     background-color: #2A322C;
     color: white;
-    padding: 25px 80px; /* Aumenta el padding horizontalmente */
+    padding: 25px 80px; 
     border-radius: 15px;
-    width: 1500px; /* Se ajusta al 60% del ancho de la pantalla */
+    width: 1500px; 
     height: 120px;
     font-size: 45px;
     cursor: pointer;
@@ -50,13 +50,13 @@
 
 .modulo-item span {
     flex-grow: 1;
-    text-align: left; /* Centra el texto */
+    text-align: left; 
 }
 
 .modulo-item img {
     width: 90px;
     height: 90px;
-    margin-left: 40px; /* Espacio entre el texto y la imagen */
+    margin-left: 40px; 
 }
 
 .modulo-item:hover {

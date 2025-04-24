@@ -138,8 +138,12 @@ const Registrar = () => {
       {mensajeExito ? (
         <div className="formulario-exito">
           <p>{mensajeExito}</p>
-          <button onClick={volverMenu}>Volver al menú principal</button>
-          <button onClick={registrarOtro}>Registrar otro</button>
+          <button className="btn-volver" onClick={volverMenu}>
+            Volver al menú principal
+          </button>
+          <button className="btn-modificar" onClick={registrarOtro}>
+            Registrar otro
+          </button>
         </div>
       ) : (
         <div className="formulario-container">
@@ -148,9 +152,7 @@ const Registrar = () => {
               <div key={campo.campo} className="formulario-item">
                 <input
                   type={
-                    ["cantidad", "precio", "id_producto", "cedula"].includes(
-                      campo.campo
-                    )
+                    ["cantidad", "precio", "id_producto", "cedula"].includes(campo.campo)
                       ? "number"
                       : campo.campo === "correo"
                       ? "email"

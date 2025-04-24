@@ -95,3 +95,24 @@
     background-color: #444;
     transform: scale(1.05);
 }
+.btn-modificar {
+    background-color: black;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-volver {
+    background-color: green;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    margin-top: 10px;
+}
